@@ -7,6 +7,7 @@ from bibgrafo.aresta import Aresta
 class TestGrafo(unittest.TestCase):
 
     def setUp(self):
+        #aaaa
         # Grafo da Paraíba
         self.g_p = MeuGrafo()
         self.g_p.adiciona_vertice("J")
