@@ -176,6 +176,26 @@ class TestGrafo(unittest.TestCase):
         self.g_d2.adiciona_vertice("C")
         self.g_d2.adiciona_vertice("D")
 
+        # arvore dfs grafo g_p vertice J
+        self.g_p_dfs_J = MeuGrafo()
+        self.g_p_dfs_J.adiciona_vertice("J")
+        self.g_p_dfs_J.adiciona_vertice("C")
+        self.g_p_dfs_J.adiciona_vertice("E")
+        self.g_p_dfs_J.adiciona_vertice("P")
+        self.g_p_dfs_J.adiciona_vertice("T")
+        self.g_p_dfs_J.adiciona_vertice("M")
+        self.g_p_dfs_J.adiciona_vertice("Z")
+        self.g_p_dfs_J.adiciona_aresta('a1', 'J', 'C')
+        self.g_p_dfs_J.adiciona_aresta('a2', 'C', 'E')
+        self.g_p_dfs_J.adiciona_aresta('a4', 'C', 'P')
+        self.g_p_dfs_J.adiciona_aresta('a6', 'C', 'T')
+        self.g_p_dfs_J.adiciona_aresta('a8', 'T', 'M')
+        self.g_p_dfs_J.adiciona_aresta('a9', 'T', 'Z')
+
+
+    def test_dfs(self):
+        self.assertEqual(self.g_p_dfs_J, self.g_p.dfs('J'))
+
     def test_adiciona_aresta(self):
         self.assertTrue(self.g_p.adiciona_aresta('a10', 'J', 'C'))
         a = Aresta("zxc", self.g_p.get_vertice("C"), self.g_p.get_vertice("Z"))

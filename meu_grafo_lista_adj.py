@@ -3,21 +3,58 @@ from bibgrafo.grafo_errors import *
 from bibgrafo.aresta import Aresta
 
 
-
 class MeuGrafo(GrafoListaAdjacencia):
+
+    def teste(self, other):
+        """
+        Define a igualdade entre a instância do GrafoListaAdjacencia para o qual essa função foi chamada e a
+        instância de um GrafoListaAdjacencia passado como parâmetro.
+        Args:
+            other: O grafo que deve ser comparado com este grafo.
+        Returns:
+            Um valor booleano caso os grafos sejam iguais.
+        """
+        if len(self.arestas) != len(other.arestas) or len(self.vertices) != len(other.vertices):
+            return False
+        for n in self.vertices:
+            if not other.existe_vertice(n):
+                return False
+        for a in self.arestas:
+            if not self.existe_rotulo_aresta(a) or not other.existe_rotulo_aresta(a):
+                return False
+            if not self.arestas[a] == other.get_aresta(a):
+                return False
+        return True
 
     def dfs(self, V=''):
        arvore_dfs = MeuGrafo()
-       self.dfs_rec(V, arvore_dfs)
+       arvore_dfs.adiciona_vertice(V)
+       dic_pais = {V: 0}
+       self.dfs_rec(arvore_dfs, dic_pais, V)
+       return arvore_dfs
        
-    def dfs_rec(self, V='', arvore_dfs = GrafoListaAdjacencia()):
-        arvore_dfs.adiciona_vertice(V)
-        # Pega próxima aresta
-        
-
-    
-    def bfs(self, V=''):
-        pass
+    def dfs_rec(self, arvore_dfs, dic_pais, V=''):
+        arestas_sobre_vertice = list(self.arestas_sobre_vertice(V))
+        arestas_sobre_vertice.sort()
+        for i in arestas_sobre_vertice:
+            v1 = self.get_aresta(i).v1.rotulo
+            v2 = self.get_aresta(i).v2.rotulo
+            if (not arvore_dfs.existe_rotulo_aresta(i)) and not(arvore_dfs.existe_rotulo_vertice(v1) and arvore_dfs.existe_rotulo_vertice(v2)):
+                aresta_a_seguir = i
+                break
+            if i == arestas_sobre_vertice[-1]:
+                pai = dic_pais[V]
+                if pai == 0:
+                    return arvore_dfs
+                return self.dfs_rec(arvore_dfs, dic_pais, pai)
+        if self.arestas[aresta_a_seguir].v1.rotulo == V:
+            v2 = self.arestas[aresta_a_seguir].v2.rotulo
+        else:
+            v2 = self.arestas[aresta_a_seguir].v1.rotulo
+        arvore_dfs.adiciona_vertice(v2)
+        dic_pais[v2] = V
+        arvore_dfs.adiciona_aresta(aresta_a_seguir, V, v2)
+        return self.dfs_rec(arvore_dfs, dic_pais, v2)
     
     def vertices_nao_adjacentes(self):
         
@@ -118,12 +155,6 @@ class MeuGrafo(GrafoListaAdjacencia):
             if str(y) == str(V):
                 arestas_v.add(i)
         return arestas_v
-        '''
-        Provê uma lista que contém os rótulos das arestas que incidem sobre o vértice passado como parâmetro
-        :param V: Um string com o rótulo do vértice a ser analisado
-        :return: Uma lista os rótulos das arestas que incidem sobre o vértice
-        :raises: VerticeInvalidoException se o vértice não existe no grafo
-        '''
 
     def eh_completo(self):
 
