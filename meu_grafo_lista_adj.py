@@ -5,27 +5,6 @@ from bibgrafo.aresta import Aresta
 
 class MeuGrafo(GrafoListaAdjacencia):
 
-    def teste(self, other):
-        """
-        Define a igualdade entre a instância do GrafoListaAdjacencia para o qual essa função foi chamada e a
-        instância de um GrafoListaAdjacencia passado como parâmetro.
-        Args:
-            other: O grafo que deve ser comparado com este grafo.
-        Returns:
-            Um valor booleano caso os grafos sejam iguais.
-        """
-        if len(self.arestas) != len(other.arestas) or len(self.vertices) != len(other.vertices):
-            return False
-        for n in self.vertices:
-            if not other.existe_vertice(n):
-                return False
-        for a in self.arestas:
-            if not self.existe_rotulo_aresta(a) or not other.existe_rotulo_aresta(a):
-                return False
-            if not self.arestas[a] == other.get_aresta(a):
-                return False
-        return True
-
     def dfs(self, V=''):
        arvore_dfs = MeuGrafo()
        arvore_dfs.adiciona_vertice(V)
