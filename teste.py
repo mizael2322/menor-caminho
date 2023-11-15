@@ -11,8 +11,7 @@ print([str(i) for i in paraiba2.g_p_dfs_J.arestas])
 print([str(i) for i in paraiba2.g_p.dfs('J').vertices])
 print([str(i) for i in paraiba2.g_p.dfs('J').arestas])
 '''
-x = paraiba2.g_p.dijkstra('J','Z')
-print(x)
+
 
 
 

@@ -28,6 +28,7 @@ class MeuGrafo(GrafoListaAdjacencia):
     def dijkstra_rec(self, V, dic_beta, dic_alpha, dic_pi, Vf):
         dic_alpha[V] = 1
         arestas_sobre_vertice = list(self.arestas_sobre_vertice(V))
+        arestas_sobre_vertice.sort()
         for i in arestas_sobre_vertice:
             v2 = self.acha_v2(i, V)
             if dic_beta[V] + self.get_aresta(i).peso < dic_beta[v2]:
