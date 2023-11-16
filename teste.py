@@ -6,11 +6,7 @@ from grafo_lista_adj_test import TestGrafo
 paraiba2 = TestGrafo()
 paraiba2.setUp()
 
-'''print([str(i) for i in paraiba2.g_p_dfs_J.vertices])
-print([str(i) for i in paraiba2.g_p_dfs_J.arestas])
-print([str(i) for i in paraiba2.g_p.dfs('J').vertices])
-print([str(i) for i in paraiba2.g_p.dfs('J').arestas])
-'''
+print(paraiba2.g_p.dfs('T'))
 
 
 

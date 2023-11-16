@@ -13,6 +13,8 @@ class MeuGrafo(GrafoListaAdjacencia):
         dic_beta[Vi] = 0
         dic_pi[Vi] = None
         self.dijkstra_rec(Vi,dic_beta, dic_alpha, dic_pi, Vf)
+        if dic_pi[Vf] == 0:
+            raise ImpossivelChegarAoVertice()
         menor_caminho = []
         v_caminho = Vf
         i = 1
@@ -35,11 +37,14 @@ class MeuGrafo(GrafoListaAdjacencia):
                 dic_beta[v2] = dic_beta[V] + self.get_aresta(i).peso
                 dic_pi[v2] = [V,i]
         minimo = float("inf")
+        prox_v = None
         for i in dic_alpha:
             if dic_alpha[i] == 0:
                 if dic_beta[i] < minimo:
                     prox_v = i
                     minimo = dic_beta[i]
+        if prox_v == None:
+            return
         if prox_v != Vf:
             self.dijkstra_rec(prox_v,dic_beta,dic_alpha, dic_pi, Vf)
              

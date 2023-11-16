@@ -249,8 +249,27 @@ class TestGrafo(unittest.TestCase):
         self.g_p_dfs_T.adiciona_aresta('a1', 'C', 'J')
         self.g_p_dfs_T.adiciona_aresta('a2', 'C', 'E')
         self.g_p_dfs_T.adiciona_aresta('a4', 'C', 'P')
-        self.g_p_dfs_T.adiciona_aresta('a8', 'C', 'M')
+        self.g_p_dfs_T.adiciona_aresta('a7', 'C', 'M')
         self.g_p_dfs_T.adiciona_aresta('a9', 'T', 'Z')
+
+        # grafos com arestas ponderadas para testes de dijkstra
+        self.g_cp = MeuGrafo()
+        self.g_cp.adiciona_vertice("J")
+        self.g_cp.adiciona_vertice("C")
+        self.g_cp.adiciona_vertice("E")
+        self.g_cp.adiciona_vertice("P")
+        self.g_cp.adiciona_vertice("M")
+        self.g_cp.adiciona_vertice("T")
+        self.g_cp.adiciona_vertice("Z")
+        self.g_cp.adiciona_aresta('a1', 'J', 'C',3)
+        self.g_cp.adiciona_aresta('a2', 'C', 'E',5)
+        self.g_cp.adiciona_aresta('a3', 'C', 'E',1)
+        self.g_cp.adiciona_aresta('a4', 'P', 'C',7)
+        self.g_cp.adiciona_aresta('a5', 'P', 'C',3)
+        self.g_cp.adiciona_aresta('a6', 'T', 'C',10)
+        self.g_cp.adiciona_aresta('a7', 'M', 'C',3)
+        self.g_cp.adiciona_aresta('a8', 'M', 'T',1)
+        self.g_cp.adiciona_aresta('a9', 'T', 'Z',6)
         
 
     def test_dijkstra(self):
@@ -261,6 +280,7 @@ class TestGrafo(unittest.TestCase):
         self.assertEqual(self.g_p.dijkstra('J','M'), ['J','a1','C','a7','M'])
         self.assertEqual(self.g_p.dijkstra('J','T'), ['J','a1','C','a6','T'])
         self.assertEqual(self.g_p.dijkstra('J','Z'), ['J','a1','C','a6','T','a9','Z'])
+        self.assertEqual(self.g_cp.dijkstra('J','Z'), ['J','a1','C','a7','M','a8','T','a9','Z'])
         
     def test_dfs(self):
         self.assertEqual(self.g_p_dfs_J, self.g_p.dfs('J'))
