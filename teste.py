@@ -6,7 +6,7 @@ from grafo_lista_adj_test import TestGrafo
 paraiba2 = TestGrafo()
 paraiba2.setUp()
 
-print(paraiba2.g_p.dfs('T'))
+print(paraiba2.g_p.dfs('M'))
 
 
 
