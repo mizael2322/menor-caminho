@@ -4,12 +4,37 @@ from bibgrafo.grafo_errors import *
 
 class MeuGrafo(GrafoListaAdjacencia):
 
+    def menor_caminho_rec(self, i, caminhos, v_caminho, dic_pi, Vi, caminho = []):
+        volta = False
+        while True:
+            if dic_pi[v_caminho] == None:
+                fim = 1
+            else:
+                fim = len(dic_pi[v_caminho])
+            for j in range(fim):
+                if j > 0:
+                    caminho_rec = caminho[1:]
+                    caminho_rec.insert(-(i+1), dic_pi[v_caminho][j][1])
+                    v_caminho_rec = dic_pi[v_caminho][j][0]
+                    self.menor_caminho_rec(i + 2, caminhos, v_caminho_rec, dic_pi, Vi, caminho_rec)
+                    volta = True
+                    continue
+                caminho.insert(-(i), v_caminho)
+                if v_caminho == Vi:
+                    break
+                caminho.insert(-(i+1), dic_pi[v_caminho][j][1])
+            if v_caminho == Vi:
+                break
+            v_caminho = self.acha_v2(caminho[-(i+1)], v_caminho)
+            i += 2
+        caminhos.append(caminho)
+
     def dijkstra(self, Vi, Vf):
         dic_alpha, dic_beta, dic_pi = {}, {}, {}
         for i in self.vertices:
             dic_beta[i.rotulo] = float("inf") 
             dic_alpha[i.rotulo] = 0
-            dic_pi[i.rotulo] = 0
+            dic_pi[i.rotulo] = []
         dic_beta[Vi] = 0
         dic_pi[Vi] = None
         self.dijkstra_rec(Vi,dic_beta, dic_alpha, dic_pi, Vf)
@@ -17,15 +42,9 @@ class MeuGrafo(GrafoListaAdjacencia):
             raise ImpossivelChegarAoVertice()
         menor_caminho = []
         v_caminho = Vf
-        i = 1
-        while True:
-            menor_caminho.insert(-(i), v_caminho)
-            if v_caminho == Vi:
-                break
-            menor_caminho.insert(-(i+1), dic_pi[v_caminho][1])
-            v_caminho = dic_pi[v_caminho][0]
-            i += 2
-        return menor_caminho
+        caminhos = []
+        self.menor_caminho_rec(1, caminhos, v_caminho, dic_pi, Vi) 
+        return caminhos
 
     def dijkstra_rec(self, V, dic_beta, dic_alpha, dic_pi, Vf):
         dic_alpha[V] = 1
@@ -33,9 +52,9 @@ class MeuGrafo(GrafoListaAdjacencia):
         arestas_sobre_vertice.sort()
         for i in arestas_sobre_vertice:
             v2 = self.acha_v2(i, V)
-            if dic_beta[V] + self.get_aresta(i).peso < dic_beta[v2]:
+            if dic_beta[V] + self.get_aresta(i).peso <= dic_beta[v2]:
                 dic_beta[v2] = dic_beta[V] + self.get_aresta(i).peso
-                dic_pi[v2] = [V,i]
+                dic_pi[v2].append([V,i])
         minimo = float("inf")
         prox_v = None
         for i in dic_alpha:
