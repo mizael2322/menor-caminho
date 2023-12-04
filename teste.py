@@ -2,6 +2,7 @@ from bibgrafo.grafo_lista_adjacencia import GrafoListaAdjacencia
 from meu_grafo_lista_adj import MeuGrafo
 from bibgrafo.aresta import Aresta
 from grafo_lista_adj_test import TestGrafo
+import json
 
 paraiba2 = TestGrafo()
 paraiba2.setUp()
@@ -31,7 +32,7 @@ g_p_com_peso.adiciona_aresta("a12", "P", "A", 1)
 g_p_com_peso.adiciona_aresta("a13", "A", "C", 2)
 g_p_com_peso.adiciona_aresta("a14", "C", "Z", 10)
 
-print(g_p_com_peso.dfs('AAA'))
+paraiba2.test_dijkstra()
 
 
 
